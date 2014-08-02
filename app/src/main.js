@@ -5,34 +5,53 @@ define(function(require, exports, module) {
     var Engine = require('famous/core/Engine');
     var Modifier = require('famous/core/Modifier');
     var Transform = require('famous/core/Transform');
-    var ImageSurface = require('famous/surfaces/ImageSurface');
+    var SpringTransition = require('famous/transitions/SpringTransition');
+    var Transitionable = require('famous/transitions/Transitionable');
+    var Timer = require('famous/utilities/Timer');
+    var GridLayout = require('famous/views/GridLayout');
+    var EventHandler = require('famous/core/EventHandler');
+    var RenderController = require('famous/views/RenderController');
+    var Surface = require('famous/core/Surface');
 
     var db = new Firebase('https://resplendent-fire-9925.firebaseio.com/');
 
-    db.set({test: 1}); // just test firebase
+    var GLOBALS = {
+        DB: db, //firebase
+        CLOUDA: window.clouda //cloudajs
+    };
+
+    var commandCenter = new EventHandler();
+
+    var navBar = require('views/navBar')(commandCenter, GLOBALS);
 
     // create the main context
     var mainContext = Engine.createContext();
 
-    clouda.lightInit({
-        ak:"Au9dGfqbsUwCgjeAQtzz9NrE",
-        module:["media"]
+    var switcher = new RenderController({overlap:false});
+
+    switcher.inOpacityFrom(function() {
+      return 1;
+    });
+    switcher.outOpacityFrom(function() {
+      return 0;
     });
 
-    var openCamera = function(){
-        clouda.device.media.captureMedia({
-                mediaType : 0,//IMAGE
-                source : 0,//CAMERA
-                onfail : function(err){
-                        alert(JSON.stringify(err));
-                },
-                onsuccess : function(mediaFile){
-                        //返回读取到的图片文件的本地全信息
-                        alert(JSON.stringify(mediaFile));
-                } 
-        });
-    };
+    // mainContext.add(new Surface({
+    //   size: [undefined, undefined],
+    //   properties: {
+    //     backgroundColor: '#FFFFFF'
+    //   }
+    // }));
 
-    //将function 暴露给 DOM
-    window.openCamera = openCamera;
+    mainContext.add(switcher);
+
+    commandCenter.on('SWITCH', function(data) {
+      // switcher.sequenceFrom([data.newScreen]);
+      switcher.show(data.newScreen);
+    });
+
+    mainContext.add(new Modifier({
+        transfrom: Transform.translate(0, 0, 100),
+        origin: [0, 1]
+    })).add(navBar);
 });
