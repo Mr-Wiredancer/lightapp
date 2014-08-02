@@ -41,7 +41,7 @@ define(function(require, exports, module) {
       },
 
       //DB: db, //firebase
-      CLOUDA: window.clouda //cloudajs
+      //CLOUDA: window.clouda //cloudajs
     };
 
     var commandCenter = new EventHandler();
@@ -85,18 +85,19 @@ define(function(require, exports, module) {
         origin: [0, 1]
     })).add(navBar);
 
-    var name = ['首页','我的饭团','我的饭史','我的资料'];
     commandCenter.on('NAV', function(data) {
-      commandCenter.emit(name[data.currentIndex], {action: 'LEAVE'});
       if (data.index === data.currentIndex) {
         return;
       }else if (data.index===0) {
         commandCenter.emit('首页', {action: 'ENTER'});
       }else if (data.index===1) {
+      commandCenter.emit('首页', {action: 'LEAVE'});
         commandCenter.emit('我的饭团', {action: 'ENTER'});
       }else if (data.index===2) {
+      commandCenter.emit('首页', {action: 'LEAVE'});
         commandCenter.emit('我的饭史', {action: 'ENTER'});
       }else if (data.index===3) {
+      commandCenter.emit('首页', {action: 'LEAVE'});
         commandCenter.emit('CONTACTUS', {action: 'ENTER'});
       }
     });

@@ -58,7 +58,7 @@ define(function(require, exports, module) {
 
         Timer.after(function() {
           console.log(data.imageName);
-          COMMAND_CENTER.emit(data.content, {action: ENTER});
+          //COMMAND_CENTER.emit(data.content, {action: ENTER});
         }, 60);
       });
     });

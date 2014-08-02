@@ -20,7 +20,11 @@ define(function(require, exports, module) {
   var __STATE = new Transitionable(__LEAVE);
 
   function createContent() {
-    return new Surface();
+    return new Surface({
+      properties: {
+        backgroundColor: 'black'
+      }
+    });
   }
 
   function createHeader() {

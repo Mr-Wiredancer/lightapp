@@ -26,12 +26,20 @@ define(function(require, exports, module) {
 
   function createContent() {
 
+    var container = new ContainerSurface({
+      properties: {
+        backgroundColor: 'black'
+      }
+    });
+
     var friendList = new VerticalScrollViewContainer({
       height: undefined,
       collection: ListData.friendList,
     });
 
-    return friendList;
+    container.add(friendList);
+
+    return container;
   }
 
   function createHeader() {
@@ -59,7 +67,7 @@ define(function(require, exports, module) {
     });
 
     header.add(new Surface({
-      content: '邀请为食团',
+      content: '我要约',
       properties: {
         color: 'white',
         fontSize: '22px',
