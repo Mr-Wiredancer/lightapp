@@ -3,6 +3,107 @@ html {
 }
 
 .backfaceVisibility {
-  -webkit-backface-visibility: visible;
-  backface-visibility: visible;
+/*  -webkit-backface-visibility: visible;
+  backface-visibility: visible;*/
+}
+
+.not-selected {
+	background-color: #FFFFFF;
+	text-align: center;
+	color: #627699;
+}
+
+.selected {
+	background-color: #627699;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+.button_selected_1px {
+	background-color: #627699;
+	color: #FFFFFF;
+	text-align: center;
+	border: 1px solid #627699;
+}
+
+.button_not_selected_1px {
+	background-color: #FFFFFF;
+	color: #627699;
+	text-align: center;
+	border: 1px solid #627699;
+}
+
+.button_header {
+	background-color: #627699;
+	color: #FFFFFF;
+	text-align: center;
+	border: 1px solid #FFFFFF;
+}
+
+.background-dark-blue {
+	background-color: #383a4c;
+}
+
+.background-light-blue {
+	background-color: #93B1E5;
+}
+
+.column-of-item-3 {
+	font-size: 12px;
+}
+
+input:focus {
+	outline:none;
+}
+
+.input_bottom_border {
+	text-align: center;
+	border: none;
+	border-radius: 0px;
+	border-bottom: 1px solid #627699;
+}
+
+.input_bottom_border_left {
+	border: none;
+	border-radius: 0px;
+	border-bottom: 1px solid #627699;
+}
+
+.training-activity-title {
+  margin: 10px 20px;
+}
+
+.training-activity-detail span {
+  color: red;
+}
+
+.training-activity-detail {
+  margin: 5px 20px;
+  font-size: 0.9em;
+}
+
+.activity_button_selected {
+  background-color: #627699;
+  color: #FFFFFF;
+}
+
+.active_box {
+  z-index: 1
+}
+.active_box .edit_button {
+  z-index: 10
+}
+
+#reportList {
+  border-collapse: collapse;
+}
+
+#reportList th {
+  border: 1px solid #627699;
+  padding: 0 2px;
+  height: 30px;
+}
+#reportList td {
+  border: 1px solid #627699;
+  padding: 5px 2px;
 }

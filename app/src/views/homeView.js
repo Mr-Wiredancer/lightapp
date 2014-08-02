@@ -58,7 +58,7 @@ define(function(require, exports, module) {
 
         Timer.after(function() {
           console.log(data.imageName);
-          //COMMAND_CENTER.emit(data.content, {action: ENTER});
+          COMMAND_CENTER.emit(data.content, {action: ENTER});
         }, 60);
       });
     });
@@ -74,8 +74,6 @@ define(function(require, exports, module) {
     var surface = new Surface({
       content: '顺记海鲜酒家全场八折!',
       properties: {
-        //lineheight: '20px',
-        height: '20px',
         color: 'white',
       }
     });
@@ -83,7 +81,7 @@ define(function(require, exports, module) {
     var container = new ContainerSurface();
 
     container.add(new Modifier({ origin: [0.1, 0.8] })).add(surface);
-    container.add(carousal);
+    container.add(new Modifier({ origin: [0.5, 0.5], size: [window.innerWidth - 10, undefined] })).add(carousal);
     return container;
   }
 
@@ -159,7 +157,7 @@ define(function(require, exports, module) {
         return Transform.translate(window.innerHeight*__STATE.get(), 0, 0);
       }
     })).add(createHeader());
-    
+
     setupEventListerners(layout);
 
     return layout;

@@ -45,9 +45,12 @@ define(function(require, exports, module) {
     };
 
     var commandCenter = new EventHandler();
+    commandCenter.emit('首页', {action: 'ENTER'});
 
     var navBar = require('views/navBar')(commandCenter, GLOBALS);
     var homeView = require('views/homeView')(commandCenter, GLOBALS);
+    var jiafanhomeView = require('views/JiafanhomeView')(commandCenter, GLOBALS);
+    var JiaFanHistoryView = require('views/JiaFanHistoryView')(commandCenter, GLOBALS);
 
     // create the main context
     var mainContext = Engine.createContext();
@@ -81,4 +84,21 @@ define(function(require, exports, module) {
         transfrom: Transform.translate(0, 0, 100),
         origin: [0, 1]
     })).add(navBar);
+
+    var name = ['首页','我的饭团','我的饭史','我的资料'];
+    commandCenter.on('NAV', function(data) {
+      commandCenter.emit(name[data.currentIndex], {action: 'LEAVE'});
+      if (data.index === data.currentIndex) {
+        return;
+      }else if (data.index===0) {
+        commandCenter.emit('首页', {action: 'ENTER'});
+      }else if (data.index===1) {
+        commandCenter.emit('我的饭团', {action: 'ENTER'});
+      }else if (data.index===2) {
+        commandCenter.emit('我的饭史', {action: 'ENTER'});
+      }else if (data.index===3) {
+        commandCenter.emit('CONTACTUS', {action: 'ENTER'});
+      }
+    });
+
 });
