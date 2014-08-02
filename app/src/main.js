@@ -13,16 +13,41 @@ define(function(require, exports, module) {
     var RenderController = require('famous/views/RenderController');
     var Surface = require('famous/core/Surface');
 
-    var db = new Firebase('https://resplendent-fire-9925.firebaseio.com/');
+    //var db = new Firebase('https://resplendent-fire-9925.firebaseio.com/');
+    Transitionable.registerMethod('spring', SpringTransition);
 
     var GLOBALS = {
-        DB: db, //firebase
-        CLOUDA: window.clouda //cloudajs
+      GAP: 2,
+
+      COLORS: {
+        CORNSILK: '#FFF8DC',
+        DARK_BLUE: '#383a4c',
+        LIGHT_BLUE: '#93B1E5',
+        LIGHT_GRAY: 'rgb(244, 244, 244)'
+      },
+
+      HEIGHTS: {
+        NAV_BAR: 44,
+        HEADER: 60,
+        FOOTER: 50
+      },
+
+      OPTIONS: {
+        SPRING: {
+          method: 'spring',
+          dampingRatio: 0.7,
+          period: 150
+        }
+      },
+
+      //DB: db, //firebase
+      CLOUDA: window.clouda //cloudajs
     };
 
     var commandCenter = new EventHandler();
 
     var navBar = require('views/navBar')(commandCenter, GLOBALS);
+    var homeView = require('views/homeView')(commandCenter, GLOBALS);
 
     // create the main context
     var mainContext = Engine.createContext();
@@ -36,12 +61,12 @@ define(function(require, exports, module) {
       return 0;
     });
 
-    // mainContext.add(new Surface({
-    //   size: [undefined, undefined],
-    //   properties: {
-    //     backgroundColor: '#FFFFFF'
-    //   }
-    // }));
+    mainContext.add(new Modifier({ transform: Transform.translate(0,0,-1) })).add(new Surface({
+       size: [undefined, undefined],
+       properties: {
+         backgroundColor: '#383a4c'
+       }
+     }));
 
     mainContext.add(switcher);
 
@@ -49,6 +74,8 @@ define(function(require, exports, module) {
       // switcher.sequenceFrom([data.newScreen]);
       switcher.show(data.newScreen);
     });
+
+    mainContext.add(homeView);
 
     mainContext.add(new Modifier({
         transfrom: Transform.translate(0, 0, 100),

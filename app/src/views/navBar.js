@@ -12,22 +12,23 @@ define(function(require, exports, module) {
     var GLOBALS = globals;
     var ICONS = [{
       name: 'home.png',
-      label: '主页'
+      label: '我的主页'
     },{
       name: 'user.png',
-      label: '账户管理'
+      label: '我的饭团'
     },{
       name: 'course.png',
-      label: '培训'
+      label: '我的饭史'
     },{
       name: 'mail.png',
-      label: '联系我们'
+      label: '消息管理'
     }];
 
     var container = new ContainerSurface({
       size: [undefined, 50],
       properties: {
-        backgroundColor: '#AAAAAA'
+        border: '1px white solid',
+        backgroundColor: '#383a4c'
       }
     });
 
@@ -41,15 +42,15 @@ define(function(require, exports, module) {
       //image
       c.add(new Modifier({origin:[0.5, 0.5], align:[0.5, 0.4]})).add(new ImageSurface({
           size:[20, 20],
-          // content: '/content/images'+icon.name
+          content: '/content/images/'+icon.name
       }));
 
       //label
-      c.add(new Modifier({transform: Transform.translate(0, 29, 0)})).add(new Surface({
+      c.add(new Modifier({transform: Transform.translate(0, 29, 1)})).add(new Surface({
           size: [undefined, 15],
           content: icon.label,
           properties: {
-              color: 'red',
+              color: 'white',
               textAlign: 'center',
               fontSize: '8px'
           }
