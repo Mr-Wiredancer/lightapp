@@ -91,13 +91,13 @@ define(function(require, exports, module) {
       }else if (data.index===0) {
         commandCenter.emit('首页', {action: 'ENTER'});
       }else if (data.index===1) {
-      commandCenter.emit('首页', {action: 'LEAVE'});
+        commandCenter.emit('首页', {action: 'LEAVE'});
         commandCenter.emit('我的饭团', {action: 'ENTER'});
       }else if (data.index===2) {
-      commandCenter.emit('首页', {action: 'LEAVE'});
+        commandCenter.emit('首页', {action: 'LEAVE'});
         commandCenter.emit('我的饭史', {action: 'ENTER'});
       }else if (data.index===3) {
-      commandCenter.emit('首页', {action: 'LEAVE'});
+        commandCenter.emit('首页', {action: 'LEAVE'});
         commandCenter.emit('CONTACTUS', {action: 'ENTER'});
       }
     });
