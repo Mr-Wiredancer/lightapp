@@ -32,6 +32,10 @@ define(function(require, exports, module) {
         FOOTER: 50
       },
 
+      CSS: {
+        BORDER: '3px white solid'
+      },
+
       OPTIONS: {
         SPRING: {
           method: 'spring',
@@ -51,6 +55,7 @@ define(function(require, exports, module) {
     var homeView = require('views/homeView')(commandCenter, GLOBALS);
     var jiafanhomeView = require('views/JiafanhomeView')(commandCenter, GLOBALS);
     var JiaFanHistoryView = require('views/JiaFanHistoryView')(commandCenter, GLOBALS);
+    var inviteFormView = require('views/inviteFormView')(commandCenter, GLOBALS);
 
     // create the main context
     var mainContext = Engine.createContext();

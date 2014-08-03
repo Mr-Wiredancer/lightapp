@@ -20,11 +20,7 @@ define(function(require, exports, module) {
   var __STATE = new Transitionable(__LEAVE);
 
   function createContent() {
-    return new Surface({
-      properties: {
-        backgroundColor: GLOBALS.DARK_BLUE
-      }
-    });
+    return new Surface();
   }
 
   function createHeader() {
@@ -32,13 +28,13 @@ define(function(require, exports, module) {
 
     var backButton = new ImageSurface({
       size:[30, 30],
-      content:'content/images/back.png'
+      content:'/content/images/back.png'
     });
 
     backButton.on('click', function() {
       leave();
       Timer.after(function() {
-        COMMAND_CENTER.emit('首页', {
+        COMMAND_CENTER.emit('我的饭团', {
           action: 'ENTER',
           isBack: true
         });
@@ -52,7 +48,7 @@ define(function(require, exports, module) {
     });
 
     header.add(new Surface({
-      content: '我的饭史',
+      content: '邀请详情',
       properties: {
         color: 'white',
         fontSize: '22px',
@@ -60,6 +56,7 @@ define(function(require, exports, module) {
         lineHeight: '60px',
         backgroundColor: GLOBALS.COLORS.DARK_BLUE,
         border: GLOBALS.CSS.BORDER
+
       }
     }));
 
@@ -83,7 +80,7 @@ define(function(require, exports, module) {
   }
 
   function setupEventListerners(screen) {
-    COMMAND_CENTER.on('我的饭史', function(data) {
+    COMMAND_CENTER.on('邀请详情', function(data) {
       if (data.action === 'ENTER'){
         COMMAND_CENTER.emit('SWITCH', {
           newScreen: screen
@@ -121,3 +118,4 @@ define(function(require, exports, module) {
     return layout;
   };
 });
+

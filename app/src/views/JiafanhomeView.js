@@ -28,7 +28,7 @@ define(function(require, exports, module) {
 
     var container = new ContainerSurface({
       properties: {
-        backgroundColor: 'black'
+        backgroundColor: '#383a4c'
       }
     });
 
@@ -47,7 +47,7 @@ define(function(require, exports, module) {
 
     var backButton = new ImageSurface({
       size:[30, 30],
-      content:'content/images/back.png'
+      content:'content/images/back.png',
     });
 
     backButton.on('click', function() {
@@ -73,7 +73,8 @@ define(function(require, exports, module) {
         fontSize: '22px',
         textAlign: 'center',
         lineHeight: '60px',
-        backgroundColor: GLOBALS.COLORS.DARK_BLUE
+        backgroundColor: GLOBALS.COLORS.DARK_BLUE,
+        border: GLOBALS.CSS.BORDER
       }
     }));
 
@@ -86,8 +87,13 @@ define(function(require, exports, module) {
       content:'content/images/button_invite.png'
     });
 
+    inviteButton.on('click', function() {
+      COMMAND_CENTER.emit('邀请详情', {action: 'ENTER'});
+      COMMAND_CENTER.emit('我的饭团', {action: 'LEAVE'});
+    });
+
     header.add(new Modifier({
-      transform:Transform.translate(300, 15, 1)
+      origin: [0.95, 0.5]
     })).add(inviteButton);
 
 //    var header = new HorizontalScrollViewContainer({

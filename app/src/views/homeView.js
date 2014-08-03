@@ -21,39 +21,59 @@ define(function(require, exports, module) {
   var __ENTER = 0;
   var __STATE = new Transitionable(__ENTER);
 
-  var LARGE_GAP = 3;
+  var LARGE_GAP = 4;
 
   function createContent() {
+    var cont = new ContainerSurface();
+
     var gridLayout = new GridLayout({dimensions:[2, 2]});
     var surfaces = [];
     gridLayout.sequenceFrom(surfaces);
 
     var DATA = [
       {
-        content: '国际机票',
+        content: 'message',
         imageName: 'brighty.png'
       },
       {
-        content: '国际机票',
+        content: 'message',
         imageName: 'blancky.png'
       },
       {
-        content: '国际机票',
+        content: 'message',
         imageName: 'moe.png'
       },
       {
-        content: '国际机票',
+        content: 'more',
         imageName: 'more.png'
       },
     ];
 
     DATA.forEach(function(data) {
-      var image = new ImageSurface({
-        content: 'content/images/' + data.imageName,
-      });
-      surfaces.push(image);
+      var container = new ContainerSurface();
+      if (data.content === 'more') {
+        var image = new ImageSurface({
+          size: [window.innerWidth / 4, window.innerWidth / 4],
+          content: 'content/images/' + data.imageName,
+        });
+        container.add(new Modifier({ origin: [.4, .4] })).add(image);
+      } else {
+        var image = new ImageSurface({
+          size: [window.innerWidth / 2.2, window.innerHeight / 4.5],
+          content: 'content/images/' + data.imageName,
+        });
+        container.add(image);
+        container.add(new Modifier({ origin: [0, 0.5] })).add(new Surface({
+          size: [100, 30],
+          content: '<p class="invite">今天晚上</p><p class="invite">小明</p><p class="invite">希望征集饭友分享</p><p class="invite">潮州菜</p>',
+          properties: {
+            color: 'white'
+          }
+        }));
+      }
+      surfaces.push(container);
 
-      image.on('click', function() {
+      container.on('click', function() {
         COMMAND_CENTER.emit('首页', {action: 'LEAVE'});
 
         Timer.after(function() {
@@ -63,7 +83,9 @@ define(function(require, exports, module) {
       });
     });
 
-    return gridLayout;
+    cont.add(new Modifier({ transform: Transform.translate(7.5, 0, 0), origin: [.5, .5] })).add(gridLayout);
+
+    return cont;
   }
 
   function createCarousal() {
@@ -74,14 +96,17 @@ define(function(require, exports, module) {
     var surface = new Surface({
       content: '顺记海鲜酒家全场八折!',
       properties: {
+      lineHeight: '40px',
+        backgroundColor: 'black',
         color: 'white',
+        textIndent: '1em'
       }
     });
 
     var container = new ContainerSurface();
 
-    container.add(new Modifier({ origin: [0.1, 0.8] })).add(surface);
-    container.add(new Modifier({ origin: [0.5, 0.5], size: [window.innerWidth - 10, undefined] })).add(carousal);
+    container.add(new Modifier({ origin: [0.5, 1], size: [window.innerWidth - 15, 40], opacity: 0.7 })).add(surface);
+    container.add(new Modifier({ origin: [0.5, 0.5], size: [window.innerWidth - 15, undefined] })).add(carousal);
     return container;
   }
 
@@ -101,15 +126,6 @@ define(function(require, exports, module) {
     header.sequenceFrom(rows);
 
     return header;
-  }
-
-  function setupEventListerners(screen) {
-    COMMAND_CENTER.on('首页', function(data) {
-      if (data.action === 'ENTER') {
-        COMMAND_CENTER.emit('SWITCH', {newScreen: screen});
-        enter();
-      }else if (data.action === 'LEAVE') leave();
-    });
   }
 
   function leave() {
@@ -142,7 +158,7 @@ define(function(require, exports, module) {
     GLOBALS = g;
 
     var layout = new HeaderFooterLayout({
-      headerSize: GLOBALS.HEIGHTS.HEADER * 4.5,
+      headerSize: window.innerHeight / 2.5,
       footerSize: GLOBALS.HEIGHTS.FOOTER
     });
 

@@ -28,7 +28,7 @@ define(function(require, exports, module) {
     var container = new ContainerSurface({
       size: [undefined, 50],
       properties: {
-        border: '1px white solid',
+        border: GLOBALS.CSS.BORDER,
         backgroundColor: '#383a4c'
       }
     });

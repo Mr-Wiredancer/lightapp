@@ -27,7 +27,7 @@ define(function (require, exports, module) {
   VerticalScrollViewContainer.DEFAULT_OPTIONS = {
     collection: [],
     classes: 'vertical-scroll-view-container',
-    itemBackgroundColor: 'white',
+    itemBackgroundColor: '#383a4c',
     width: undefined,
     height: undefined,
     lineHeight: 100,
@@ -53,7 +53,6 @@ define(function (require, exports, module) {
     this.scrollView.sequenceFrom(this.itemViews);
     this.container.add(this.scrollView);
     this._add(this.container);
-
   }
 
   function _createContent() {
