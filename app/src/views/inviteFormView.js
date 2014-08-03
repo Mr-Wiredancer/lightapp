@@ -10,6 +10,8 @@ define(function(require, exports, module) {
   var Timer = require('famous/utilities/Timer');
   var Transform = require('famous/core/Transform');
   var Transitionable = require('famous/transitions/Transitionable');
+  var InputSurface = require('famous/surfaces/InputSurface');
+  var View = require('famous/core/View');
 
   var COMMAND_CENTER;
   var GLOBALS;
@@ -19,8 +21,106 @@ define(function(require, exports, module) {
   var __ENTER = 0;
   var __STATE = new Transitionable(__LEAVE);
 
+  var result = {};
+
   function createContent() {
-    return new Surface();
+    var view = new View();
+    var layout = new SequentialLayout();
+
+    var foodInput = new InputSurface({
+      size: [undefined, 30],
+      type: 'text',
+      placeholder: '想吃点什么',
+      value: '',
+      name: 'food',
+      properties: {
+        color: GLOBALS.COLORS.DARK_BLUE,
+        border: 'none',
+        borderBottom: '1px solid ' + GLOBALS.COLORS.DARK_BLUE
+      }
+    });
+
+    var foodLabel = new Surface({
+      content: '请输入想吃的东西',
+      size: [undefined, 60],
+      properties: {
+        color: 'white',
+        lineHeight: '20px'
+      }
+    });
+
+    var dateInput = new InputSurface({
+      size: [undefined, 30],
+      type: 'text',
+      placeholder: '什么时候呢',
+      value: '',
+      name: 'date',
+      properties: {
+        color: GLOBALS.COLORS.DARK_BLUE,
+        border: 'none',
+        borderBottom: '1px solid ' + GLOBALS.COLORS.DARK_BLUE
+      }
+    });
+
+    var dateLabel = new Surface({
+      content: '请输入日期',
+      size: [undefined, 60],
+      properties: {
+        color: 'white',
+        lineHeight: '20px'
+      }
+    });
+
+    var noticeInput = new InputSurface({
+      size: [undefined, 100],
+      type: 'text',
+      placeholder: '有什么需要注意的事情吗',
+      value: '',
+      name: 'date',
+      properties: {
+        color: GLOBALS.COLORS.DARK_BLUE,
+        border: 'none',
+        borderBottom: '1px solid ' + GLOBALS.COLORS.DARK_BLUE
+      }
+    });
+
+    var noticeLabel = new Surface({
+      content: '备注',
+      size: [undefined, 30],
+      properties: {
+        color: 'white',
+        lineHeight: '20px'
+      }
+    });
+
+    var button = new Surface({
+      content: '确定',
+      size: [undefined, 50],
+      properties: {
+        color: 'white',
+        textAlign: 'center',
+        lineHeight: '50px',
+        border: GLOBALS.CSS.BORDER,
+      }
+    });
+
+    layout.sequenceFrom([foodInput, foodLabel, dateInput, dateLabel, noticeInput, noticeLabel, button]);
+
+    view.add(new Modifier({
+      origin: [0.5, 0],
+      size: [window.innerWidth - GLOBALS.GAP * 10, undefined],
+      transform: Transform.translate(0, 20, 0)
+    })).add(layout);
+
+
+    button.on('click', function() {
+      result.food = foodInput.getValue();
+      result.date = dateInput.getValue();
+      result.notice = noticeInput.getValue();
+      console.log(result);
+    });
+
+    return view;
   }
 
   function createHeader() {
