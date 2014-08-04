@@ -104,6 +104,10 @@ define(function(require, exports, module) {
       }
     });
 
+    button.on('click', function() {
+      COMMAND_CENTER.emit('首页', {action: 'ENTER'});
+    });
+
     layout.sequenceFrom([foodInput, foodLabel, dateInput, dateLabel, noticeInput, noticeLabel, button]);
 
     view.add(new Modifier({
@@ -117,6 +121,22 @@ define(function(require, exports, module) {
       result.food = foodInput.getValue();
       result.date = dateInput.getValue();
       result.notice = noticeInput.getValue();
+      var date = new Date();
+      date = date.toLocaleString();
+      date = date.split(' ').join('');
+      var childRef = GLOBALS.DB.child('waiting/'); // 获取waiting路径的reference
+      var time = result.date;
+      var number = 2;
+      var food = result.food;
+      var notice = result.notice;
+      // 可以在这个地方改变需要在数据库中保存的键值对
+      childRef.push({					// 在waiting路径下创建新的order
+          time: time,
+          food: food,
+          notice: notice,
+          number: number,
+          imageName: 'content/images/blancky.png'
+      });
       console.log(result);
     });
 
@@ -138,7 +158,7 @@ define(function(require, exports, module) {
           action: 'ENTER',
           isBack: true
         });
-      }, 60);
+      }, GLOBALS.DELAY);
     });
 
     MY_CENTER.on('HEADER', function(data) {

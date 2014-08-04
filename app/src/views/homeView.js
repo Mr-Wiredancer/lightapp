@@ -22,55 +22,36 @@ define(function(require, exports, module) {
   var __STATE = new Transitionable(__ENTER);
 
   var LARGE_GAP = 4;
+  var gridLayout;
+  var surfaces = [];
 
-  function createContent() {
-    var cont = new ContainerSurface();
-
-    var gridLayout = new GridLayout({dimensions:[2, 2]});
-    var surfaces = [];
+  function addWaitingOrder(data) {
+    gridLayout = new GridLayout({dimensions:[2, 2]});
     gridLayout.sequenceFrom(surfaces);
 
-    var DATA = [
-      {
-        content: 'message',
-        imageName: 'brighty.png'
-      },
-      {
-        content: 'message',
-        imageName: 'blancky.png'
-      },
-      {
-        content: 'message',
-        imageName: 'moe.png'
-      },
-      {
-        content: 'more',
-        imageName: 'more.png'
-      },
-    ];
-
-    DATA.forEach(function(data) {
+    data.forEach(function(childData) {
+      console.log(childData.val()['food']);
       var container = new ContainerSurface();
-      if (data.content === 'more') {
-        var image = new ImageSurface({
-          size: [window.innerWidth / 4, window.innerWidth / 4],
-          content: 'content/images/' + data.imageName,
-        });
-        container.add(new Modifier({ origin: [.4, .4] })).add(image);
-      } else {
-        var image = new ImageSurface({
-          size: [window.innerWidth / 2.2, window.innerHeight / 4.5],
-          content: 'content/images/' + data.imageName,
-        });
-        container.add(image);
-        container.add(new Modifier({ origin: [0, 0.5] })).add(new Surface({
-          size: [100, 30],
-          content: '<p class="invite">今天晚上</p><p class="invite">小明</p><p class="invite">希望征集饭友分享</p><p class="invite">潮州菜</p>',
-          properties: {
-            color: 'white'
-          }
-        }));
-      }
+
+      //if (childData.content === 'more') {
+        //var image = new ImageSurface({
+          //size: [window.innerWidth / 4, window.innerWidth / 4],
+          //content: 'content/images/' + data.imageName,
+        //});
+        //container.add(new Modifier({ origin: [.4, .4] })).add(image);
+      //} else {
+      var image = new ImageSurface({
+        size: [window.innerWidth / 2.2, window.innerHeight / 4.2],
+        content: childData.val()['imageName'],
+      });
+      container.add(image);
+      container.add(new Modifier({ origin: [0, 0.5] })).add(new Surface({
+        size: [100, 30],
+        content: '<p class="invite">'+childData.val()['food']+'</p><p class="invite">'+childData.val()['time']+'</p><p class="invite">'+childData.val()['number']+'</p><p class="invite">'+childData.val()['notice']+'</p>',
+        properties: {
+          color: 'white'
+        }
+      }));
       surfaces.push(container);
 
       container.on('click', function() {
@@ -79,9 +60,74 @@ define(function(require, exports, module) {
         Timer.after(function() {
           console.log(data.imageName);
           //COMMAND_CENTER.emit(data.content, {action: ENTER});
-        }, 60);
+        }, GLOBALS.DELAY);
       });
     });
+  }
+
+  function createContent() {
+    var waitingRef = GLOBALS.DB.child('waiting'); // 链接waiting路径
+    var cont = new ContainerSurface();
+
+    waitingRef.on('value', addWaitingOrder);
+    //waitingRef.on('child_added', addWaitingOrder);
+    var gridLayout = new GridLayout({dimensions:[2, 2]});
+    gridLayout.sequenceFrom(surfaces);
+    console.log(surfaces);
+
+    //var DATA = [
+      //{
+        //content: 'message',
+        //imageName: 'brighty.png'
+      //},
+      //{
+        //content: 'message',
+        //imageName: 'blancky.png'
+      //},
+      //{
+        //content: 'message',
+        //imageName: 'moe.png'
+      //},
+      //{
+        //content: 'more',
+        //imageName: 'more.png'
+      //},
+    //];
+
+    //DATA.forEach(function(data) {
+      //var container = new ContainerSurface();
+      //if (data.content === 'more') {
+        //var image = new ImageSurface({
+          //size: [window.innerWidth / 4, window.innerWidth / 4],
+          //content: 'content/images/' + data.imageName,
+        //});
+        //container.add(new Modifier({ origin: [.4, .4] })).add(image);
+      //} else {
+        //var image = new ImageSurface({
+          //size: [window.innerWidth / 2.2, window.innerHeight / 4.2],
+          //content: 'content/images/' + data.imageName,
+        //});
+        //container.add(image);
+        //container.add(new Modifier({ origin: [0, 0.5] })).add(new Surface({
+          //size: [100, 30],
+          //content: '<p class="invite">今天晚上</p><p class="invite">小明</p><p class="invite">希望征集饭友分享</p><p class="invite">潮州菜</p>',
+          //properties: {
+            //color: 'white'
+          //}
+        //}));
+      //}
+      //surfaces.push(container);
+
+      //container.on('click', function() {
+        //COMMAND_CENTER.emit('首页', {action: 'LEAVE'});
+
+        //Timer.after(function() {
+          //console.log(data.imageName);
+          ////COMMAND_CENTER.emit(data.content, {action: ENTER});
+        //}, GLOBALS.DELAY);
+      //});
+    //});
+    console.log(gridLayout);
 
     cont.add(new Modifier({ transform: Transform.translate(7.5, 0, 0), origin: [.5, .5] })).add(gridLayout);
 
@@ -94,7 +140,7 @@ define(function(require, exports, module) {
     });
 
     var surface = new Surface({
-      content: '顺记海鲜酒家全场八折!',
+      content: '第二人半价!',
       properties: {
       lineHeight: '40px',
         backgroundColor: 'black',
@@ -120,7 +166,7 @@ define(function(require, exports, module) {
     var rows = [
       new Surface({size: [undefined, GAP*LARGE_GAP]}),
       createCarousal(),
-      new Surface({size: [undefined, GAP*LARGE_GAP]})
+      new Surface({size: [undefined, GAP*LARGE_GAP*1.2]})
     ];
 
     header.sequenceFrom(rows);

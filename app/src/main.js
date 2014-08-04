@@ -13,7 +13,8 @@ define(function(require, exports, module) {
     var RenderController = require('famous/views/RenderController');
     var Surface = require('famous/core/Surface');
 
-    //var db = new Firebase('https://resplendent-fire-9925.firebaseio.com/');
+    var db = new Firebase('https://jiafan.firebaseio.com/');
+    console.log(db);
     Transitionable.registerMethod('spring', SpringTransition);
 
     var GLOBALS = {
@@ -44,7 +45,9 @@ define(function(require, exports, module) {
         }
       },
 
-      //DB: db, //firebase
+      DELAY: 6,
+
+      DB: db, //firebase
       //CLOUDA: window.clouda //cloudajs
     };
 
@@ -53,9 +56,11 @@ define(function(require, exports, module) {
 
     var navBar = require('views/navBar')(commandCenter, GLOBALS);
     var homeView = require('views/homeView')(commandCenter, GLOBALS);
-    var jiafanhomeView = require('views/JiafanhomeView')(commandCenter, GLOBALS);
+    //var jiafanhomeView = require('views/JiafanhomeView')(commandCenter, GLOBALS);
     var JiaFanHistoryView = require('views/JiaFanHistoryView')(commandCenter, GLOBALS);
     var inviteFormView = require('views/inviteFormView')(commandCenter, GLOBALS);
+    var JiaFanGroupView = require('views/JiafanGroupView')(commandCenter, GLOBALS);
+    var JiaFanInboxView = require('views/JiaFanInboxView')(commandCenter, GLOBALS);
 
     // create the main context
     var mainContext = Engine.createContext();
@@ -103,7 +108,7 @@ define(function(require, exports, module) {
         commandCenter.emit('我的饭史', {action: 'ENTER'});
       }else if (data.index===3) {
         commandCenter.emit('首页', {action: 'LEAVE'});
-        commandCenter.emit('CONTACTUS', {action: 'ENTER'});
+        commandCenter.emit('讯息', {action: 'ENTER'});
       }
     });
 

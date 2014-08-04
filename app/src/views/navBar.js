@@ -19,10 +19,10 @@ define(function(require, exports, module) {
       label: '我的饭团'
     },{
       name: 'course.png',
-      label: '我的饭史'
+      label: '我的动态'
     },{
       name: 'mail.png',
-      label: '我的资料'
+      label: '消息管理'
     }];
 
     var container = new ContainerSurface({

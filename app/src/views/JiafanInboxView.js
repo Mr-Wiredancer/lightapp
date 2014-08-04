@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function(require, exports, module) {
   var ContainerSurface = require('famous/surfaces/ContainerSurface');
   var EventHandler = require('famous/core/EventHandler');
   var HeaderFooterLayout = require('famous/views/HeaderFooterLayout');
@@ -11,6 +11,11 @@ define(function (require, exports, module) {
   var Transform = require('famous/core/Transform');
   var Transitionable = require('famous/transitions/Transitionable');
 
+  var HorizontalScrollViewContainer = require('views/HorizontalScrollViewContainer');
+  var VerticalScrollViewContainer = require('views/VerticalScrollViewContainer');
+
+  var ListData = require('views/ListData');
+
   var COMMAND_CENTER;
   var GLOBALS;
   var MY_CENTER = new EventHandler();
@@ -21,35 +26,33 @@ define(function (require, exports, module) {
 
   function createContent() {
 
-    var surfaces = [];
+    var container = new ContainerSurface({
+      properties: {
+        backgroundColor: 'black'
+      }
+    });
 
-    var sequentialLayout = new SequentialLayout();
-    sequentialLayout.sequenceFrom(surfaces);
+    var friendList = new VerticalScrollViewContainer({
+      height: undefined,
+      collection: ListData.inboxList,
+    });
 
-    surfaces.push(new ImageSurface({
-      size: [undefined, window.innerHeight / 2.5],
-      content: 'content/images/profile.png'
-    }))
+    container.add(friendList);
 
-    surfaces.push(new ImageSurface({
-      size: [undefined, window.innerHeight / 2.5],
-      content: 'content/images/bottom.jpg'
-    }))
-
-    return sequentialLayout;
+    return container;
   }
 
   function createHeader() {
     var header = new ContainerSurface();
 
     var backButton = new ImageSurface({
-      size: [30, 30],
-      content: 'content/images/back.png'
+      size:[30, 30],
+      content:'content/images/back.png'
     });
 
-    backButton.on('click', function () {
+    backButton.on('click', function() {
       leave();
-      Timer.after(function () {
+      Timer.after(function() {
         COMMAND_CENTER.emit('首页', {
           action: 'ENTER',
           isBack: true
@@ -57,14 +60,14 @@ define(function (require, exports, module) {
       }, 60);
     });
 
-    MY_CENTER.on('HEADER', function (data) {
-      if (data.action === 'ENTER') {
-      } else if (data.action === 'LEAVE') {
+    MY_CENTER.on('HEADER', function(data) {
+      if (data.action === 'ENTER'){
+      }else if (data.action === 'LEAVE'){
       }
     });
 
     header.add(new Surface({
-      content: '我的饭史',
+      content: '我的讯息',
       properties: {
         color: 'white',
         fontSize: '22px',
@@ -76,8 +79,12 @@ define(function (require, exports, module) {
     }));
 
     header.add(new Modifier({
-      transform: Transform.translate(10, 15, 1)
+        transform:Transform.translate(10, 15, 1)
     })).add(backButton);
+
+//    var header = new HorizontalScrollViewContainer({
+//      height: 300,
+//    });
 
     return header;
   }
@@ -95,36 +102,37 @@ define(function (require, exports, module) {
   }
 
   function setupEventListerners(screen) {
-    COMMAND_CENTER.on('我的饭史', function (data) {
-      if (data.action === 'ENTER') {
+    COMMAND_CENTER.on('讯息', function(data) {
+      if (data.action === 'ENTER'){
         COMMAND_CENTER.emit('SWITCH', {
           newScreen: screen
         });
         enter(data);
-      } else if (data.action === 'LEAVE') {
+      }else if (data.action === 'LEAVE'){
         leave();
       }
     });
   }
 
-  module.exports = function (c, g) {
+
+  module.exports = function(c, g) {
     COMMAND_CENTER = c;
     GLOBALS = g;
 
     var layout = new HeaderFooterLayout({
       headerSize: GLOBALS.HEIGHTS.HEADER,
-      footerSize: GLOBALS.HEIGHTS.FOOTER
+      footerSize: GLOBALS.HEIGHTS.FOOTER,
     });
 
     layout.content.add(new Modifier({
-      transform: function () {
-        return Transform.translate(window.innerWidth * __STATE.get(), 0, 0);
+      transform: function() {
+        return Transform.translate(window.innerWidth*__STATE.get(), 0, 0);
       }
     })).add(createContent());
 
     layout.header.add(new Modifier({
-      transform: function () {
-        return Transform.translate(window.innerHeight * __STATE.get(), 0, 0);
+      transform: function() {
+        return Transform.translate(window.innerHeight*__STATE.get(), 0, 0);
       }
     })).add(createHeader());
 

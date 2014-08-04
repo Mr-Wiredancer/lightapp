@@ -57,7 +57,7 @@ define(function(require, exports, module) {
           action: 'ENTER',
           isBack: true
         });
-      }, 60);
+      }, GLOBALS.DELAY);
     });
 
     MY_CENTER.on('HEADER', function(data) {

@@ -1,0 +1,225 @@
+html {
+    background-color: #fff;
+    color: #fff;
+}
+
+.layer {
+    background-color: #444;
+}
+
+.main-menu-strip-item {
+    font-size: 16px;
+}
+
+.grid-item {
+    border-top: 1px solid #414141;
+    border-right: 1px solid #414141;
+}
+
+.grid-item h1 {
+    position: absolute;
+    /*font-size: 16px;*/
+    font-size: 0.7rem;
+    bottom: 6px;
+    left: 6px;
+    right: 6px;
+}
+
+.item-title {
+    font-size: 20px;
+    font-size: 1rem;
+    color: black;
+}
+
+.item-detail img {
+
+}
+
+.item-detail .item-detail-title {
+    font-size: 32px;
+    font-size: 3.2rem;
+    color: black;
+}
+
+.item-detail .item-detail-content {
+    color: black;
+}
+
+.filterIcon {
+    top: 100px;
+}
+
+.filterIconImg {
+    display: block;
+    margin: auto;
+}
+
+.filterIconText {
+    /*font-family: "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial, sans-serif;*/
+    margin-top: 8px;
+    font-family: 'Arial';
+    font-size: 11px;
+    color: black;
+    text-align: center;
+}
+
+.selectionIconImg {
+    display: block;
+    margin: auto;
+}
+
+.selectionIconText {
+    /*font-family: "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial, sans-serif;*/
+    display: block;
+    font-size: 24px;
+    text-align: center;
+    margin-top: 8px;
+    font-weight: normal;
+    color: #666;
+}
+
+.selectionIconDesc {
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+    line-height: 1.5em;
+    /*width: 65%;*/
+    margin: 0 auto;
+}
+
+.available {
+    opacity: 1;
+}
+
+.unavailable {
+    opacity: 0.1;
+}
+
+.message-item-background-head-read {
+    position: absolute;
+    left: 0px;
+    background-image: url(../content/images/message-background.png);
+    width: 2px;
+    height: 100px;
+}
+
+.message-item-background-head-unread {
+    position: absolute;
+    left: 0px;
+    background-image: url(../content/images/message-background-unread.png);
+    width: 2px;
+    height: 100px;
+}
+
+.list-item-container {
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.list-item-icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+}
+
+.list-item {
+    color: black;
+    height: 100%;
+}
+
+.list-item .title {
+    position: absolute;
+    left: 100px;
+    top: 20px;
+    width: 500px;
+    height: 30px;
+    font-size: 16px;
+}
+
+.list-item .time {
+    color: #a5a4a4;
+    text-align: right;
+    position: absolute;
+    top: 20px;
+    width: 800px;
+    height: 30px;
+    font-size: 14px;
+}
+
+.list-item .description {
+    color: white;
+    position: absolute;
+    left: 100px;
+    top: 42px;
+    width: 500px;
+    font-size: 0.8em;
+}
+
+.list-icon {
+    position: absolute;
+    top: 20px;
+    left: 5px;
+    vertical-align: middle;
+}
+
+.list-subject {
+    position: absolute;
+    width: 70%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    top: 10px;
+    left: 40px;
+    font-size: 1.4em;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.list-type {
+    color: grey;
+    position: absolute;
+    left: 40px;
+    top: 40px;
+}
+
+.list-arrow {
+    position: relative;
+    top: 25px;
+    margin-right: 5px;
+    float: right;
+}
+
+.item-detail {
+    border-top: 1px solid #6F6F6F;
+}
+
+.blur {
+    /*-webkit-filter: blur(1px) brightness(2);*/
+}
+
+.image-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    background-image: -webkit-linear-gradient(-90deg, rgba(0, 122, 255, 0.1) 0%, #2a2a2a 100%);
+    background-image: -moz-linear-gradient(-90deg, rgba(0, 122, 255, 0.1) 0%, #2a2a2a 100%);
+    background-image: linear, -90deg, rgba(0, 122, 255, 0.1) 0%, #2a2a2a 100%;
+}
+
+.image-overlay:hover {
+    opacity: .3;
+}
+
+.ispSelection {
+    float: left;
+    border: 1px;
+    padding-left: 100px;
+}
+
+.ispSelection .icon {
+    width: 600px;
+}
